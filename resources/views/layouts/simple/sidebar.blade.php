@@ -87,7 +87,7 @@
 								</a>
 							</li>
 							<li>
-								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="{{route('restaurant.index')}}">Restaurants List
+								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="{{route('restaurant.index')}}">All Restaurants List
 								</a>
 							</li>
 							<li>

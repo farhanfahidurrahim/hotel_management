@@ -8,7 +8,7 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Create New Restaurant</h3>
+<h3>Edit Restaurant</h3>
 @endsection
 
 
@@ -18,9 +18,10 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>Create Restaurant</h5>
+					<h5>Edit Restaurant</h5>
+					<a href="{{ route('restaurant.index') }}" class="" style="float: right;">All Restuarant List</a>
 				</div>
-				<form class="form theme-form" action="{{route('restaurant.store')}}" method="POST" enctype="multipart/form-data">
+				<form class="form theme-form" action="{{route('restaurant.update',$data->id)}}" method="POST" enctype="multipart/form-data">
 					@csrf
 					@method('POST')
 					<div class="card-body">
@@ -30,7 +31,7 @@
                 				<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Restaurant Name</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="name" type="text" placeholder="Name">
+										<input class="form-control" name="name" type="text" value="{{ $data->name }}">
 									</div>
 								</div>
 
@@ -39,8 +40,8 @@
 									<div class="col-sm-9">
 										<select class="custom-select form-select" id="division" name="division_id" required>
 										    <option value="" selected disabled>Choose Division</option>
-												@foreach($divisions as $division)
-												<option value="{{ $division->id }}">{{ $division->name }}</option>
+												@foreach($division as $row)
+												<option value="{{ $row->id }}" @if($row->id==$data->id) selected @endif>{{ $row->name }}</option>
 												@endforeach
 										</select>
 									</div>
@@ -67,77 +68,78 @@
                 				<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Location</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="location" type="text" placeholder="Location">
+										<input class="form-control" name="location" type="text" value="{{ $data->location }}">
 									</div>
 								</div>
 
 				                <div class="mb-3 row mb-0">
 				                    <label class="col-sm-3 col-form-label">Description</label>
 				                    <div class="col-sm-9">
-				                      <textarea class="form-control" name="description" rows="5" cols="5" placeholder="Description"></textarea>
+				                      <textarea class="form-control" name="description" rows="5" cols="5" value="Description">{{ $data->description }}</textarea>
 				                    </div>
 				                </div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Discount</label>
 									<div class="col-sm-9">
-										<input class="form-control digits" name="discount" type="number" placeholder="Discount">
+										<input class="form-control digits" name="discount" type="number" value="{{ $data->discount }}">
 									</div>
 								</div>
 
 			         	       <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Latitude</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="latitude" type="text" placeholder="Latitude">
+										<input class="form-control" name="latitude" type="text" value="{{ $data->latitude }}">
 									</div>
 								</div>
 
                 				<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Longitude</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="longitude" type="text" placeholder="Longitude">
+										<input class="form-control" name="longitude" type="text" value="{{ $data->longitude }}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Contact No.</label>
 									<div class="col-sm-9">
-										<input class="form-control m-input digits" type="number" name="contact_no" placeholder="01*********">
+										<input class="form-control m-input digits" type="number" name="contact_no" value="{{ $data->contact_no }}">
 									</div>
 								</div>
 								
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Facebook Page</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="url" name="facebook_page" placeholder="https://facebook.com">
+										<input class="form-control" type="url" name="facebook_page" value="{{ $data->facebook_page }}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Website Link</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="website_link" type="url" placeholder="https://example.com">
+										<input class="form-control" name="website_link" type="url" value="{{ $data->website_link }}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">YouTube Channel</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="youtube_link" type="url" placeholder="https://youtube.com">
+										<input class="form-control" name="youtube_link" type="url" value="{{ $data->youtube_link }}">
 									</div>
 								</div>
 
-                				<div class="mb-3 row">
-									<label class="col-sm-3 col-form-label">Upload Photo</label>
-									<div class="col-sm-9">
+								<div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Photo</label>
+                                    <div class="col-sm-9">
 										<input class="form-control" name="photo" type="file" accept="image/*">
-									</div>
-								</div>
+										<img src="{{ asset('file/restaurant/images/'.$data->photo) }}" alt="" width="150" height="100" srcset="">
+                                    </div>
+                                </div>
 
                  				<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Tags</label>
 									<div class="col-sm-9">
-										<input class="form-control" name="tags" type="text" placeholder="Enter Comma Separated Value">
+										<input class="form-control" name="tags" type="text" value="{{ $data->tags }}">
 									</div>
 								</div>
 
@@ -145,9 +147,9 @@
 									<label class="col-sm-3 col-form-label">Select Status</label>
 									<div class="col-sm-9">
 										<select name="status" class="custom-select form-select">
-											<option selected="" disabled>Open this select menu</option>
-											<option value="1">Active</option>
-											<option value="0">In Active</option>
+											<option disabled>Open this select menu</option>
+											<option value="1"{{ $data->status==1 ? 'selected' : '' }}>Active</option>
+											<option value="0"{{ $data->status==0 ? 'selected' : '' }}>In Active</option>
 										</select>
 									</div>
 								</div>
@@ -155,7 +157,7 @@
 						</div>
 					</div>
 					<div class="text-center">
-						<button class="mb-5 btn btn-primary text-center" type="submit">Save</button>
+						<button class="mb-5 btn btn-primary text-center" type="submit">Update</button>
 					</div>
 				</form>
 			</div>

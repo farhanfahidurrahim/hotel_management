@@ -81,15 +81,6 @@ class HotelController extends Controller
         $data['services']=$request->services;
         $data['photo']=$request->photo;
         //Working with Image
-        // if ($request->photo) {
-        //     $file = $request->file('image');
-        //     //dd($file);
-        //     $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
-        //     //dd($filename);
-        //     $file->move(public_path('public/files/'), $filename);
-
-        //     $data['photo']= $filename;
-        // }
 
         DB::table('hotels')->insert($data);
         return redirect()->back();

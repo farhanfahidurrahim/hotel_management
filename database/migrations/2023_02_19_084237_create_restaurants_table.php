@@ -24,6 +24,7 @@ class CreateRestaurantsTable extends Migration
             $table->string('longitude');
             $table->string('contact_no');
             $table->string('facebook_page');
+            $table->string('website_link');
             $table->string('youtube_link');
             $table->string('photo');
             $table->string('tags');

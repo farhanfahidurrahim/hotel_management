@@ -13,8 +13,7 @@
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Hotels</li>
-<li class="breadcrumb-item active">Restuarant List</li>
+<a href="{{ route('restaurant.create') }}" class="btn btn-primary btn-sm">Add New Restuarant</a>
 @endsection
 
 @section('content')
@@ -44,10 +43,13 @@
 									<td>{{ $row->location }}</td>
 									<td>{{ $row->discount }}</td>
 									<td>{{ $row->contact_no }}</td>
-									<td>{{ $row->status }}</td>
 									<td>
-										<a href="" class="btn btn-primary btn-sm">Edit</a>
-										<a href="">Delete</a>
+										@if($row->status==1)<i class="btn btn-success">Active</i>@endif
+										@if($row->status==0)<i class="btn btn-danger">In-Active</i>@endif
+									</td>
+									<td>
+										<a href="{{ route('restaurant.edit',$row->id) }}" class="btn btn-primary btn-sm">Edit</a>
+										<a href="{{ route('restaurant.delete',$row->id) }}" class="btn btn-danger btn-sm">Delete</a>
 									</td>
 								</tr>
 								@endforeach
