@@ -13,8 +13,7 @@
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Hotels</li>
-<li class="breadcrumb-item active">Hotel List</li>
+<a href="{{ route('restaurant.menus.create') }}" class="btn btn-primary btn-sm">Add New Restuarant Menu</a>
 @endsection
 
 @section('content')
@@ -34,17 +33,26 @@
 									<th>Description</th>
 									<th>Discount</th>
 									<th>Status</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
+								@foreach($data as $row)
 								<tr>
-									<td>Tiger Nixon</td>
-									<td>System Architect</td>
-									<td>Edinburgh</td>
-									<td>61</td>
-									<td>2011/04/25</td>
+									<td>{{ $row->restaurant->name }}</td>
+									<td>{{ $row->name }}</td>
+									<td>{{ $row->description }}</td>
+									<td>{{ $row->discount }}</td>
+									<td>
+										@if($row->status==1)<i class="btn btn-success">Active</i>@endif
+										@if($row->status==0)<i class="btn btn-danger">In-Active</i>@endif
+									</td>
+									<td>
+										<a href="{{ route('restaurant.menus.edit',$row->id) }}" class="btn btn-primary">Edit</a>
+										<a href="{{ route('restaurant.menus.delete',$row->id) }}" class="btn btn-danger">Delete</a>
+									</td>
 								</tr>
-
+								@endforeach
 						</table>
 					</div>
 				</div>

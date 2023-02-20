@@ -112,7 +112,14 @@ Route::prefix('restaurant')->group(function () {
     Route::get('/edit/{id}', [RestaurantController::class,'edit'])->name('restaurant.edit');
     Route::post('/update/{id}', [RestaurantController::class,'update'])->name('restaurant.update');
     Route::post('/delete/{id}', [RestaurantController::class,'destroy'])->name('restaurant.delete');
+
     Route::get('/menus', [RestaurantController::class,'menus'])->name('restaurant.menus');
+    Route::get('/menus/create', [RestaurantController::class,'menusCreate'])->name('restaurant.menus.create');
+    Route::post('/menus/store', [RestaurantController::class,'menusStore'])->name('restaurant.menus.store');
+    Route::get('/menus/edit/{id}', [RestaurantController::class,'menusEdit'])->name('restaurant.menus.edit');
+    Route::post('/menus/update/{id}', [RestaurantController::class,'menusUpdate'])->name('restaurant.menus.update');
+    Route::post('/menus/delete/{id}', [RestaurantController::class,'menusDestroy'])->name('restaurant.menus.delete');
+
     Route::get('/menus/foods', [RestaurantController::class,'foods'])->name('restaurant.foods');
     Route::get('/ratings', [RestaurantController::class,'rating'])->name('restaurant.ratings');
 });

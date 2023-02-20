@@ -6,6 +6,7 @@ use App\Models\District;
 use App\Models\Division;
 use App\Models\Restaurant;
 use App\Models\Upozilla;
+use App\Models\Restaurantmenu;
 use Illuminate\Http\Request;
 use DB;
 
@@ -140,14 +141,83 @@ class RestaurantController extends Controller
         return redirect()->back();
     }
 
+
+    ////////////////////////---Menu---////////////////////////
+    ////////////////////////---Menu---////////////////////////
+
+
+    public function menus()
+    {   
+        $data=Restaurantmenu::all();
+        return view('restaurant.menus',compact('data'));
+    }
+
+    public function menusCreate()
+    {
+        $restaurant = Restaurant::all();
+        return view('restaurant.menus_create', compact('restaurant'));
+    }
+
+    public function menusStore(Request $request)
+    {
+        $data=array();
+        $data['restaurant_id']=$request->restaurant_id;
+        $data['name']=$request->name;
+        $data['description']=$request->description;
+        $data['discount']=$request->discount;
+        $data['tags']=$request->tags;
+        $data['status']=$request->status;
+        //Working with Image
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = date('Ymdhms').'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('file/restaurantmenu/images/'),$filename);
+
+            $data['photo'] = $filename;
+        }
+
+        DB::table('restaurantmenus')->insert($data);
+        return redirect()->route('restaurant.menus');
+    }
+
+    public function menusedit($id)
+    {   
+        $data=Restaurantmenu::findOrFail($id);
+        $restaurant=Restaurant::all();
+        return view('restaurant.menus_edit',compact('data','restaurant'));
+    }
+
+    public function menusupdate(Request $request, $id)
+    {
+        $requestData = $request->all();
+        $data =   Restaurantmenu::FindorFail($id);
+
+        if ($request->hasFile('photo')) {
+
+            $file = $request->file('photo');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('file/restaurantmenu/images/'), $filename);
+            // deleting previous photo 
+            @unlink(public_path('file/restaurantmenu/images/'. $data->photo));
+            $requestData['photo']= $filename;
+        }
+
+        $data->fill($requestData)->save();
+        return redirect()->route('restaurant.menus');
+    }
+
+    public function menusdestroy($id)
+    {
+        $data=Restaurantmenu::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back();
+    }
+
     public function foods()
     {
         return view('restaurant.foods');
-    }
-
-    public function menus()
-    {
-        return view('restaurant.menus');
     }
 
     public function rating()
@@ -166,7 +236,5 @@ class RestaurantController extends Controller
     public function show($id)
     {
         //
-    }
-
-    
+    }   
 }

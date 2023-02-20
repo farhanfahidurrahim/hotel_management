@@ -19,6 +19,7 @@
 			<div class="card">
 				<div class="card-header">
 					<h5>Create Restaurant</h5>
+					<a href="{{ route('restaurant.index') }}" class="" style="float: right;">All Restuarant List</a>
 				</div>
 				<form class="form theme-form" action="{{route('restaurant.store')}}" method="POST" enctype="multipart/form-data">
 					@csrf
