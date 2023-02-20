@@ -9,12 +9,11 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Hotel List</h3>
+<h3>Hotel Room Offers</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Hotels</li>
-<li class="breadcrumb-item active">Hotel Rooms</li>
+<a href="{{ route('hotels.rooms.create') }}" class="btn btn-primary">Create Room</a>
 @endsection
 
 @section('content')
@@ -32,19 +31,30 @@
 									<th>Hotel Name</th>
 									<th>Title</th>
 									<th>Price</th>
-									<th>Discount</th>
+									<th>Discount(%)</th>
+									<th>Discount Price</th>
+									<th>Offer Start Date</th>
+									<th>Offer End Date</th>
 									<th>Actions</th>
 								</tr>
 							</thead>
 							<tbody>
+								@foreach($data as $row)
 								<tr>
-									<td>Tiger Nixon</td>
-									<td>System Architect</td>
-									<td>Edinburgh</td>
-									<td>61</td>
-									<td>2011/04/25</td>
+									<td>{{ $row->hotel->name }}</td>
+									<td>{{ $row->title }}</td>
+									<td>{{ $row->price }}</td>
+									<td>{{ $row->discount }}</td>
+									<td>{{ $row->discount_price }}</td>
+									<td>{{ $row->offer_start_date }}</td>
+									<td>{{ $row->offer_end_date }}</td>
+									<td>
+										<a href="{{ route('hotels.rooms.edit',$row->id) }}" class="btn btn-primary btn-sm">Edit</a>
+										<a href="{{ route('hotels.rooms.delete',$row->id) }}" class="btn btn-danger btn-sm">Delete</a>
+									</td>
 								</tr>
-
+								@endforeach
+							</tbody>	
 						</table>
 					</div>
 				</div>

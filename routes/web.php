@@ -89,7 +89,14 @@ Route::prefix('hotels')->group(function () {
     Route::post('/update/{id}', [HotelController::class,'update'])->name('hotels.update');
     Route::post('/delete/{id}', [HotelController::class,'destroy'])->name('hotels.delete');
     Route::get('/view', [HotelController::class,'view'])->name('hotels.view');
-    Route::get('/rooms', [HotelController::class,'rooms'])->name('hotels.rooms');
+
+    //route hotel room
+    Route::get('/hotel-rooms', [HotelController::class,'rooms'])->name('hotels.rooms');
+    Route::get('/hotel-rooms-offer-create', [HotelController::class,'roomCreate'])->name('hotels.rooms.create');
+    Route::post('/hotel-rooms-offer-store', [HotelController::class,'roomStore'])->name('hotels.rooms.store');
+    Route::get('/hotel-rooms-offer-edit/{id}', [HotelController::class,'roomEdit'])->name('hotels.rooms.edit');
+    Route::post('/hotel-rooms-offer-update/{id}', [HotelController::class,'roomUpdate'])->name('hotels.rooms.update');
+    Route::post('/hotel-rooms-offer-delete/{id}', [HotelController::class,'roomDestroy'])->name('hotels.rooms.delete');
     Route::get('/rating', [HotelController::class,'ratings'])->name('hotels.rating');
 });
 
@@ -167,7 +174,6 @@ Route::prefix('popular-deals')->group(function () {
 });
 
 
-
 Route::resource('emergency', EmergencyContactsController::class);
 Route::resource('customer',CustomerController::class);
 
@@ -187,7 +193,6 @@ Route::resource('customer',CustomerController::class);
 
 Route::post('/get-districts', [AjaxController::class, 'getDistricts'])->name('get.districts');
 Route::post('/get-upazillas', [AjaxController::class, 'getUpazillas'])->name('get.upozillas');
-
 
 //Language Change
 Route::get('lang/{locale}', function ($locale) {

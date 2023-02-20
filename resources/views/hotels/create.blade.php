@@ -179,6 +179,17 @@
 									</div>
 								</div>
 
+								<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Select Status</label>
+									<div class="col-sm-9">
+										<select name="status" class="custom-select form-select">
+											<option selected="" disabled>Open this select menu</option>
+											<option value="1">Active</option>
+											<option value="0">In Active</option>
+										</select>
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</div>

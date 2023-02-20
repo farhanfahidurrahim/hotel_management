@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Hotel;
 use App\Models\Division;
+use App\Models\Hotelroom;
 use Illuminate\Http\Request;
 use DB;
 
@@ -33,16 +34,6 @@ class HotelController extends Controller
     public function view()
     {
         return view('hotels.view');
-    }
-
-    public function rooms()
-    {
-        return view('hotels.rooms');
-    }
-
-    public function ratings()
-    {
-        return view('hotels.ratings');
     }
 
     /**
@@ -172,4 +163,81 @@ class HotelController extends Controller
 
         return redirect()->back();
     }
+
+    public function rooms()
+    {
+        $data=Hotelroom::all();
+        return view('hotels.rooms',compact('data'));
+    }
+
+    public function roomCreate()
+    {   
+        $data=Hotel::all();
+        return view('hotels.rooms_create',compact('data'));
+    }
+
+    public function roomStore(Request $request)
+    {
+        $data=array();
+        $data['hotel_id']=$request->hotel_id;
+        $data['title']=$request->title;
+        $data['subtitle']=$request->subtitle;
+        $data['description']=$request->description;
+        $data['offer_start_date']=$request->offer_start_date;
+        $data['offer_end_date']=$request->offer_end_date;
+        $data['beds']=$request->beds;
+        $data['baths']=$request->baths;
+        $data['price']=$request->price;
+        $data['discount']=$request->discount;
+        $data['discount_price']=$request->discount_price;
+        $data['max_occupancy']=$request->max_occupancy;
+        $data['private_policy']=$request->private_policy;
+        $data['info']=$request->info;
+        $data['image']=$request->image;
+
+        DB::table('hotelrooms')->insert($data);   
+        return redirect()->route('hotels.rooms');
+    }
+
+    public function roomEdit($id)
+    {
+        $data=Hotelroom::findOrFail($id);
+        $hdata=Hotel::all();
+        return view('hotels.rooms_edit',compact('data','hdata'));
+    }
+
+    public function roomUpdate(Request $request,$id)
+    {
+        $data=array();
+        $data['hotel_id']=$request->hotel_id;
+        $data['title']=$request->title;
+        $data['subtitle']=$request->subtitle;
+        $data['description']=$request->description;
+        $data['offer_start_date']=$request->offer_start_date;
+        $data['offer_end_date']=$request->offer_end_date;
+        $data['beds']=$request->beds;
+        $data['baths']=$request->baths;
+        $data['price']=$request->price;
+        $data['discount']=$request->discount;
+        $data['discount_price']=$request->discount_price;
+        $data['max_occupancy']=$request->max_occupancy;
+        $data['private_policy']=$request->private_policy;
+        $data['info']=$request->info;
+        //$data['image']=$request->image;
+
+        DB::table('hotelrooms')->update($data);   
+        return redirect()->route('hotels.rooms');
+    }
+
+    public function roomDestroy($id)
+    {
+        $data=Hotelroom::findOrFail($id);
+        $data->delete();
+    }
+
+    public function ratings()
+    {
+        return view('hotels.ratings');
+    }
+
 }

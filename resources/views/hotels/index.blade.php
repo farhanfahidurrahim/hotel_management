@@ -48,7 +48,13 @@
 									<td>{{ $row->price }}</td>
 									<td>{{ $row->offer_price }}</td>
 									<td>{{ $row->discount }}</td>
-									<td> st </td>
+									<td> @if($row->status==1)
+											<i class="btn btn-success">Active</i>
+										@endif
+										@if($row->status==0)
+											<i class="btn btn-danger">In-Active</i>
+										@endif
+									</td>
 									<td>
 										<a href="{{ route('hotels.edit',$row->id) }}" class="btn btn-primary btn-sm">Edit</a>
 										<a href="{{ route('hotels.delete',$row->id) }}" class="btn btn-danger btn-sm">Delete</a>
