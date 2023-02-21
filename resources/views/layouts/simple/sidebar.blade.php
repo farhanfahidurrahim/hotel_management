@@ -181,15 +181,7 @@
 							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
 						</ul>
 					</li>
-					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('emergency.index')}}">
-							<i data-feather="file-text"></i><span>{{ trans('Emergency Contacts') }}</span>
-
-						</a>
-							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
-
-						</ul>
-					</li>
+		
 					<li class="sidebar-list">
 						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('customer.index')}}">
 							<i data-feather="file-text"></i><span>{{ trans('Customer Management') }}</span>
@@ -235,6 +227,16 @@
 
 						</a>
 							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
+						</ul>
+					</li>
+
+					<li class="sidebar-list">
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('emergency.index')}}">
+							<i data-feather="file-text"></i><span>{{ trans('Emergency Contacts') }}</span>
+
+						</a>
+							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
+
 						</ul>
 					</li>
 

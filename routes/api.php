@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DivisionController;
+use App\Http\Controllers\Api\RestaurantController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,7 @@ Route::get('/all_divison',[DivisionController::class,'index']);
 Route::post('/add_divison',[DivisionController::class,'store']);
 Route::post('/update_divison/{id}',[DivisionController::class,'update']);
 Route::post('/delete_divison/{id}',[DivisionController::class,'destroy']);
+
+//Restaurant Routes
+Route::get('/all-restaurant',[RestaurantController::class,'index']);
+Route::get('/all-restaurant-menus',[RestaurantController::class,'menuIndex']);
