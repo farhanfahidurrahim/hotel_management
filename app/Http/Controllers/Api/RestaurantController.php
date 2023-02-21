@@ -11,7 +11,7 @@ class RestaurantController extends Controller
 {
     public function index()
     {
-        $data=Restaurant::orderBy('name','asc')->get();
+        $data=Restaurant::where('status','=',1)->orderBy('name','asc')->get();
         if ($data) {
             return response()->json([
                 'ALL Restaurant'=>$data,

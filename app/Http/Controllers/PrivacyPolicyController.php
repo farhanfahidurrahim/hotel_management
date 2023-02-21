@@ -2,28 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PrivacyPolicy;
 use Illuminate\Http\Request;
+use App\Models\PrivacyPolicy;
 
 class PrivacyPolicyController extends Controller
 {
-    public function add()
-    {
-        $privacy = new PrivacyPolicy();
-        $privacy->title = "Privacy Policy";
-        $privacy->description = "Lots of Privacy and lots of Policy";
-        $privacy->save();
-    }
-
-    public function delete()
-    {
-        $help  = PrivacyPolicy::where('id', 1)->first();
-        $help->delete();
-    }
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
-    {
-        //
+    {   
+        $data=PrivacyPolicy::orderBy('id','asc')->get();
+        return view('privacy_policy.index',compact('data'));
     }
 
     /**
@@ -44,7 +36,10 @@ class PrivacyPolicyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->all();
+        PrivacyPolicy::create($data);
+
+        return redirect()->back();
     }
 
     /**
@@ -64,10 +59,9 @@ class PrivacyPolicyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $privacy  = PrivacyPolicy::where('id', 1)->first();
-        return View("privacy_policy.create", compact('privacy'));
+        //
     }
 
     /**
@@ -77,19 +71,9 @@ class PrivacyPolicyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-
-        $data = $request->validate([
-            'title' => 'string|max:255',
-            'description' => 'string|max:255',
-        ]);
-
-        $privacy = PrivacyPolicy::findOrFail(1);
-        $privacy->update($data);
-
-        return back();
-
+        //
     }
 
     /**
@@ -100,6 +84,9 @@ class PrivacyPolicyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data=PrivacyPolicy::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

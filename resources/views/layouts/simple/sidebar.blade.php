@@ -192,7 +192,7 @@
 						</ul>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('about.edit')}}">
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('about-us.index')}}">
 							<i data-feather="file-text"></i><span>{{ trans('Manage About Us') }}</span>
 						</a>
 							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
@@ -200,21 +200,21 @@
 						</ul>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('privacy.edit')}}">
-							<i data-feather="file-text"></i><span>{{ trans('manage Privacy Policy') }}</span>
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('privacy-policy.index')}}">
+							<i data-feather="file-text"></i><span>{{ trans('Manage Privacy Policy') }}</span>
 						</a>
 							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
 						</ul>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('support.edit')}}">
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('help-support.index')}}">
 							<i data-feather="file-text"></i><span>{{ trans('Manage Help & Support') }}</span>
 						</a>
 							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">
 						</ul>
 					</li>
 					<li class="sidebar-list">
-						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('service.edit')}}">
+						<a class="sidebar-link sidebar-title {{request()->route()->getPrefix() == '/forms' ? 'active' : '' }}" href="{{route('terms-service.index')}}">
 							<i data-feather="file-text"></i><span>{{ trans('Manage Terms of Service') }}</span>
 						</a>
 							<ul class="sidebar-submenu" style="display: {{ request()->route()->getPrefix() == '/forms' ? 'block;' : 'none;' }}">

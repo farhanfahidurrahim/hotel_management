@@ -33,6 +33,7 @@
 									<th>Discount</th>
 									<th>Contact No</th>
 									<th>Status</th>
+									<th>Popular Deals</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -46,6 +47,10 @@
 									<td>
 										@if($row->status==1)<i class="btn btn-success">Active</i>@endif
 										@if($row->status==0)<i class="btn btn-danger">In-Active</i>@endif
+									</td>
+									<td>
+										@if($row->popular_deal==1)<i class="btn btn-success">Popular</i>@endif
+										@if($row->popular_deal==0)<i class="btn btn-danger">Not-Popular</i>@endif
 									</td>
 									<td>
 										<a href="{{ route('restaurant.edit',$row->id) }}" class="btn btn-primary btn-sm">Edit</a>

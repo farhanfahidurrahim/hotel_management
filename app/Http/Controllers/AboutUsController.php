@@ -8,23 +8,11 @@ use Illuminate\Http\Request;
 class AboutUsController extends Controller
 {
 
-    public function add()
-    {
-        $about = new AboutUs();
-        $about->title = "Privacy Policy";
-        $about->description = "Lots of Privacy and lots of Policy";
-        $about->save();
-    }
-
-    public function delete()
-    {
-        $About  = AboutUs::where('id', 1)->first();
-        $About->delete();
-    }
 
     public function index()
     {
-        //
+        $data = AboutUs::orderBy('id','desc')->get();
+        return view('aboutus.index',compact('data'));
     }
 
     /**
@@ -45,7 +33,9 @@ class AboutUsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        AboutUs::create($data);
+        return back();
     }
 
     /**
@@ -65,11 +55,12 @@ class AboutUsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
-    {
-        $about  = AboutUs::where('id', 1)->first();
-        return View("aboutus.create", compact('about'));
-    }
+    // public function edit($id)
+    // {
+    //     $about  = AboutUs::FindorFail($id);
+
+    //     return View("aboutus.create", compact('about'));
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -78,20 +69,20 @@ class AboutUsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
-    {
+    // public function update(Request $request)
+    // {
 
-        $data = $request->validate([
-            'title' => 'string|max:255',
-            'description' => 'string|max:255',
-        ]);
+    //     $data = $request->validate([
+    //         'title' => 'string|max:255',
+    //         'description' => 'string|max:255',
+    //     ]);
 
-        $about = AboutUs::findOrFail(1);
-        $about->update($data);
+    //     $about = AboutUs::findOrFail(1);
+    //     $about->update($data);
 
-        return back();
+    //     return back();
 
-    }
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -101,6 +92,8 @@ class AboutUsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $about = AboutUs::findOrFail($id);
+        $about->delete();
+        return back();
     }
 }

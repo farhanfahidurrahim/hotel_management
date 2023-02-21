@@ -59,7 +59,7 @@ class RestaurantController extends Controller
         //     'tags' => 'nullable|string',
         //     'status' => 'required|boolean',
         // ]);
-
+        dd($request->all());
         $data=array();
         $data['name']=$request->name;
         $data['division_id']=$request->division_id;
@@ -74,6 +74,7 @@ class RestaurantController extends Controller
         $data['youtube_link']=$request->youtube_link;
         $data['tags']=$request->tags;
         $data['status']=$request->status;
+        $data['popular_deal']=$request->popular_deal;
         //Working with Image
         if ($request->hasFile('photo')) {
             $file = $request->file('photo');
@@ -108,7 +109,8 @@ class RestaurantController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+        //dd($request->all());
         $requestData = $request->all();
         $data =   Restaurant::FindorFail($id);
 

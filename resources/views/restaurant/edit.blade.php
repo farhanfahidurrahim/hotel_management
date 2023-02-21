@@ -153,6 +153,17 @@
 										</select>
 									</div>
 								</div>
+
+								<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Popular Deals</label>
+									<div class="col-sm-9">
+										<select name="popular_deal" class="custom-select form-select">
+											<option disabled>Open this select menu</option>
+											<option value="1"{{ $data->popular_deal==1 ? 'selected' : '' }}>Popular</option>
+											<option value="0"{{ $data->popular_deal==0 ? 'selected' : '' }}>Not Popular</option>
+										</select>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HelpAndSupport;
 use Illuminate\Http\Request;
+use App\Models\HelpAndSupport;
 
 class HelpAndSupportController extends Controller
 {
@@ -12,26 +12,10 @@ class HelpAndSupportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-
-
     public function index()
-    {
-        //
-    }
-
-    public function add()
-    {
-        $help = new HelpAndSupport();
-        $help->title = "Help and Support";
-        $help->description = "Lots of help and support";
-        $help->save();
-    }
-
-    public function delete()
-    {
-        $help  = HelpAndSupport::where('id', 1)->first();
-        $help->delete();
+    {   
+        $data=HelpAndSupport::orderBy('id','asc')->get();
+        return view('help_support.index',compact('data'));
     }
 
     /**
@@ -41,7 +25,7 @@ class HelpAndSupportController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -52,7 +36,10 @@ class HelpAndSupportController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->all();
+        HelpAndSupport::create($data);
+
+        return redirect()->back();
     }
 
     /**
@@ -72,11 +59,9 @@ class HelpAndSupportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $help  = HelpAndSupport::where('id', 1)->first();
-        return View("support.create", compact('help'));
-
+        //
     }
 
     /**
@@ -86,19 +71,9 @@ class HelpAndSupportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-
-        $data = $request->validate([
-            'title' => 'string|max:255',
-            'description' => 'string|max:255',
-        ]);
-
-        $help = HelpAndSupport::findOrFail(1);
-        $help->update($data);
-
-        return back();
-
+        //
     }
 
     /**
@@ -109,6 +84,9 @@ class HelpAndSupportController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data=HelpAndSupport::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

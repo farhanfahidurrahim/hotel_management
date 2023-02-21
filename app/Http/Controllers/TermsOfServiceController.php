@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TermsRequest;
-use App\Models\TermsOfService;
-use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use App\Models\TermsOfService;
 
 class TermsOfServiceController extends Controller
 {
@@ -16,7 +14,8 @@ class TermsOfServiceController extends Controller
      */
     public function index()
     {
-        //
+        $data=TermsOfService::orderBy('id','asc')->get();
+        return view('terms_service.index',compact('data'));
     }
 
     /**
@@ -26,6 +25,7 @@ class TermsOfServiceController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
@@ -36,7 +36,10 @@ class TermsOfServiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data=$request->all();
+        TermsOfService::create($data);
+
+        return redirect()->back();
     }
 
     /**
@@ -56,10 +59,9 @@ class TermsOfServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit()
+    public function edit($id)
     {
-        $term  = TermsOfService::where('id', 3)->first();
-        return View("service.create", compact('term'));
+        //
     }
 
     /**
@@ -69,33 +71,11 @@ class TermsOfServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'title' => 'string|max:255',
-            'description' => 'string|max:255',
-        ]);
-
-        $terms = TermsOfService::findOrFail(3);
-        $terms->update($data);
-
-        return back();
+        //
     }
 
-
-    public function add()
-    {
-        $term = new TermsOfService();
-        $term->title = "terms of service";
-        $term->description = "terms of service is available and verified";
-        $term->save();
-    }
-
-    public function delete()
-    {
-        $term  = TermsOfService::where('id', 1)->first();
-        $term->delete();
-    }
     /**
      * Remove the specified resource from storage.
      *
@@ -104,6 +84,9 @@ class TermsOfServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data=TermsOfService::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

@@ -153,39 +153,21 @@ Route::prefix('campaign')->group(function () {
     Route::get('/delete/{id}', [CampaignController::class,'delete'])->name('campaign.destroy');
 });
 
-Route::prefix('about')->group(function () {
-    Route::get('edit', [AboutUsController::class,'edit'])->name('about.edit');
-    Route::get('add', [AboutUsController::class,'add'])->name('about.add');
-    Route::get('delete', [AboutUsController::class,'create'])->name('about.delete');
-    Route::patch('update', [AboutUsController::class,'update'])->name('about.update');
-});
+Route::resource('customer', CustomerController::class);
 
-Route::prefix('privacy')->group(function () {
-    Route::get('edit', [PrivacyPolicyController::class,'edit'])->name('privacy.edit');
-    Route::get('add', [PrivacyPolicyController::class,'add'])->name('privacy.add');
-    Route::get('delete', [PrivacyPolicyController::class,'create'])->name('privacy.delete');
-    Route::patch('update', [PrivacyPolicyController::class,'update'])->name('privacy.update');
-});
+Route::resource('/about-us', AboutUsController::class);
 
-Route::prefix('support')->group(function () {
-    Route::get('edit', [HelpAndSupportController::class,'edit'])->name('support.edit');
-    Route::get('add', [HelpAndSupportController::class,'add'])->name('support.add');
-    Route::get('delete', [HelpAndSupportController::class,'create'])->name('support.delete');
-    Route::patch('update', [HelpAndSupportController::class,'update'])->name('support.update');
-});
+Route::resource('/privacy-policy', PrivacyPolicyController::class);
 
-Route::prefix('service')->group(function () {
-    Route::get('edit', [TermsOfServiceController::class,'edit'])->name('service.edit');
-    Route::patch('update', [TermsOfServiceController::class,'update'])->name('service.update');
-});
+Route::resource('/help-support', HelpAndSupportController::class);
+
+Route::resource('/terms-service', TermsOfServiceController::class);
 
 Route::prefix('popular-deals')->group(function () {
     Route::get('/', [PopularDealsController::class,'index'])->name('deals.index');
 });
 
-
 Route::resource('emergency', EmergencyContactsController::class);
-Route::resource('customer',CustomerController::class);
 
 
 // Route::get('/login', function(){
