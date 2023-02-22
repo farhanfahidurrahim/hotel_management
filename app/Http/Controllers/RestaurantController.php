@@ -7,6 +7,7 @@ use App\Models\Division;
 use App\Models\Restaurant;
 use App\Models\Upozilla;
 use App\Models\Restaurantmenu;
+use App\Models\Restaurantrating;
 use Illuminate\Http\Request;
 use DB;
 
@@ -145,7 +146,6 @@ class RestaurantController extends Controller
 
 
     ////////////////////////---Menu---////////////////////////
-    ////////////////////////---Menu---////////////////////////
 
 
     public function menus()
@@ -222,12 +222,36 @@ class RestaurantController extends Controller
         return view('restaurant.foods');
     }
 
+    ////////////////////////---Rating---////////////////////////
+
     public function rating()
-    {
-        return view('restaurant.rating');
+    {   
+        $data=Restaurantrating::all();
+        return view('restaurant.rating',compact('data'));
     }
 
-    
+    public function ratingEdit($id)
+    {   
+        $data=Restaurantrating::findOrFail($id);
+        return view('restaurant.rating_edit',compact('data'));
+    }
+
+    public function ratingUpdate(Request $request,$id)
+    {
+        $requestData = $request->all();
+        $data =   Restaurantrating::FindorFail($id);
+
+        $data->fill($requestData)->save();
+        return redirect()->route('restaurant.ratings');
+    }
+
+    public function ratingDelete($id)
+    {
+        $data=Restaurantrating::findOrFail($id);
+        $data->delete();
+
+        return redirect()->back();
+    }
 
     /**
      * Display the specified resource.

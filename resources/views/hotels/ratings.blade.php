@@ -9,12 +9,12 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Hotel List</h3>
+<h3>Hotel Rating</h3>
 @endsection
 
 @section('breadcrumb-items')
 <li class="breadcrumb-item">Hotels</li>
-<li class="breadcrumb-item active">Hotel Rooms</li>
+<li class="breadcrumb-item active">Hotel Rating</li>
 @endsection
 
 @section('content')
@@ -29,22 +29,32 @@
 						<table class="display dataTable" id="basic-3">
 							<thead>
 								<tr>
-									<th>Customer Name</th>
+									<th>Sl</th>
 									<th>Hotel Name</th>
-									<th>Room Title</th>
 									<th>Feedback</th>
 									<th>Rating</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>Tiger Nixon</td>
-									<td>System Architect</td>
-									<td>Edinburgh</td>
-									<td>61</td>
-									<td>2011/04/25</td>
+								@foreach($data as $row)
+									<td>{{ $loop->iteration }}</td>
+									<td>{{ $row->restaurant->name }}</td>
+									<td>{{ $row->feedback }}</td>
+									<td>
+										@if($row->star==1)<i class="btn btn-secondary">1 Star</i>@endif
+										@if($row->star==2)<i class="btn btn-secondary">2 Star</i>@endif
+										@if($row->star==3)<i class="btn btn-secondary">3 Star</i>@endif
+										@if($row->star==4)<i class="btn btn-secondary">4 Star</i>@endif
+										@if($row->star==5)<i class="btn btn-secondary">5 Star</i>@endif
+									</td>
+									<td>
+										<a href="{{ route('restaurant.ratings.edit',$row->id) }}" class="btn btn-primary">Edit</a>
+										<a href="{{ route('restaurant.ratings.delete',$row->id) }}" class="btn btn-danger">Delete</a>
+									</td>
 								</tr>
-
+								@endforeach
 						</table>
 					</div>
 				</div>

@@ -121,7 +121,11 @@ Route::prefix('restaurant')->group(function () {
     Route::post('/menus/delete/{id}', [RestaurantController::class,'menusDestroy'])->name('restaurant.menus.delete');
 
     Route::get('/menus/foods', [RestaurantController::class,'foods'])->name('restaurant.foods');
+
     Route::get('/ratings', [RestaurantController::class,'rating'])->name('restaurant.ratings');
+    Route::get('/ratings/edit/{id}', [RestaurantController::class,'ratingEdit'])->name('restaurant.ratings.edit');
+    Route::post('/ratings/update/{id}', [RestaurantController::class,'ratingUpdate'])->name('restaurant.ratings.update');
+    Route::post('/ratings/delete/{id}', [RestaurantController::class,'ratingDelete'])->name('restaurant.ratings.delete');
 });
 
 Route::prefix('orders')->group(function () {
