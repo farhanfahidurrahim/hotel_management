@@ -36,6 +36,10 @@ Route::post('/add_divison',[DivisionController::class,'store']);
 Route::post('/update_divison/{id}',[DivisionController::class,'update']);
 Route::post('/delete_divison/{id}',[DivisionController::class,'destroy']);
 
+// displayjibon  all hotel
+Route::get('/all_hotel',[HotelController::class,'hotel_list']);
+Route::get('/hotel_Room_list',[HotelController::class,'hotel_Room_list']);
+
 //Restaurant API Routes
 Route::get('/all-restaurant',[RestaurantController::class,'index']);
 Route::get('/all-restaurant-menus',[RestaurantController::class,'menuIndex']);

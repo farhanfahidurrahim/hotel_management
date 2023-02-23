@@ -12,7 +12,12 @@ use Illuminate\Http\Request;
 use DB;
 
 class RestaurantController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -60,7 +65,7 @@ class RestaurantController extends Controller
         //     'tags' => 'nullable|string',
         //     'status' => 'required|boolean',
         // ]);
-        dd($request->all());
+        //dd($request->all());
         $data=array();
         $data['name']=$request->name;
         $data['division_id']=$request->division_id;

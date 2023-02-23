@@ -32,9 +32,9 @@
 									<label class="col-sm-3 col-form-label">Select Restaurant</label>
 									<div class="col-sm-9">
 										<select class="custom-select form-select" id="division" name="restaurant_id" required>
-										    <option value="" selected disabled>Choose Restaurant</option>
+										    <option value="" disabled>Choose Restaurant</option>
 												@foreach($restaurant as $row)
-												<option value="{{ $row->id }}" @if($row->id==$data->id) selected @endif>{{ $row->name }}</option>
+												<option value="{{ $row->id }}" @if($row->id==$data->restaurant_id) selected @endif>{{ $row->name }}</option>
 												@endforeach
 										</select>
 									</div>

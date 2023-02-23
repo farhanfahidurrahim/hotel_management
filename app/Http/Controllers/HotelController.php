@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Hotel;
 use App\Models\Division;
+use App\Models\Hotel;
 use App\Models\Hotelroom;
+use App\Models\Hotelrating;
 use Illuminate\Http\Request;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class HotelController extends Controller
 {
@@ -16,9 +17,10 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
-        $data=Hotel::all();
-        return view('hotels.index',compact('data'));
+    {
+        $data = Hotel::all();
+        // return $data;
+        return view('hotels.index', compact('data'));
     }
 
     /**
@@ -27,9 +29,9 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $data=Division::all();
-        return view('hotels.create',compact('data'));
+    {
+        $data = Division::all();
+        return view('hotels.create', compact('data'));
     }
     public function view()
     {
@@ -43,47 +45,58 @@ class HotelController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-        // $request->validate([
-        //     'name' => 'required',
-        //     'division_id' => 'required',
-        //     'location' => 'required',
-        //     'description' => 'required',
-        //     'discount' => 'required',
-        //     'latitude' => 'required',
-        //     'longitude' => 'required',
-        //     'contact_no' => 'required',
-        //     'facebook_page' => 'required',
-        //     'website_link' => 'required',
-        //     'youtube_link' => 'required',
-        //     'tags' => 'required',
-        //     'services' => 'required',
-        //     'photo' => 'required',
-        // ]);
+    {
+        $request->validate([
+            'name' => 'required',
+            'division_id' => 'required',
+            'location' => 'required',
+            'description' => 'required',
+            'discount' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'contact_no' => 'required',
+            'facebook_page' => 'required',
+            'website_link' => 'required',
+            'youtube_link' => 'required',
+            'tags' => 'required',
+            'services' => 'required',
+            'status' => 'required',
+            'photo' => 'required',
+        ]);
 
-        // dd($request->all());
+        //dd($request->all());
 
-        $data=array();
-        $data['name']=$request->name;
-        $data['division_id']=$request->division_id;
-        $data['location']=$request->location;
-        $data['description']=$request->description;
-        $data['price']=$request->price;
-        $data['offer_price']=$request->offer_price;
-        $data['discount']=$request->discount;
-        $data['latitude']=$request->latitude;
-        $data['longitude']=$request->longitude;
-        $data['contact_no']=$request->contact_no;
-        $data['facebook_page']=$request->facebook_page;
-        $data['website_link']=$request->website_link;
-        $data['youtube_link']=$request->youtube_link;
-        $data['tags']=$request->tags;
-        $data['services']=$request->services;
-        $data['photo']=$request->photo;
+        $data = array();
+        $data['name'] = $request->name;
+        $data['division_id'] = $request->division_id;
+        $data['location'] = $request->location;
+        $data['description'] = $request->description;
+        $data['price'] = $request->price;
+        $data['offer_price'] = $request->offer_price;
+        $data['discount'] = $request->discount;
+        $data['latitude'] = $request->latitude;
+        $data['longitude'] = $request->longitude;
+        $data['contact_no'] = $request->contact_no;
+        $data['facebook_page'] = $request->facebook_page;
+        $data['website_link'] = $request->website_link;
+        $data['youtube_link'] = $request->youtube_link;
+        $data['tags'] = $request->tags;
+        $data['services'] = $request->services;
+        $data['status'] = $request->status;
+        $data['popular_deal'] = $request->popular_deal;
         //Working with Image
+        if ($request->hasFile('photo')) {
+
+            $file = $request->file('photo');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('file/hotel/images/'), $filename);
+
+            $data['photo'] = $filename;
+        }
 
         DB::table('hotels')->insert($data);
-        return redirect()->back();
+        return redirect()->route('hotels.index');
     }
 
     /**
@@ -105,9 +118,9 @@ class HotelController extends Controller
      */
     public function edit($id)
     {
-        $data=Hotel::find($id);
-        $div=Division::all();
-        return view('hotels.edit',compact('data','div'));
+        $data = Hotel::find($id);
+        $div = Division::all();
+        return view('hotels.edit', compact('data', 'div'));
     }
 
     /**
@@ -117,27 +130,23 @@ class HotelController extends Controller
      * @param  \App\Models\Hotel  $hotel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-        $data=array();
-        $data['name']=$request->name;
-        $data['division_id']=$request->division_id;
-        $data['location']=$request->location;
-        $data['description']=$request->description;
-        $data['price']=$request->price;
-        $data['offer_price']=$request->offer_price;
-        $data['discount']=$request->discount;
-        $data['latitude']=$request->latitude;
-        $data['longitude']=$request->longitude;
-        $data['contact_no']=$request->contact_no;
-        $data['facebook_page']=$request->facebook_page;
-        $data['website_link']=$request->website_link;
-        $data['youtube_link']=$request->youtube_link;
-        $data['tags']=$request->tags;
-        $data['services']=$request->services;
-        //$data['photo']=$request->photo;
+        $requestData = $request->all();
+        // return $requestData;
+        $data = Hotel::FindorFail($id);
 
-        DB::table('hotels')->where('id',$id)->update($data);
+        if ($request->hasFile('photo')) {
+
+            $file = $request->file('photo');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('hotel/images/'), $filename);
+            // deleting previous photo
+            @unlink(public_path('hotel/images/' . $data->photo));
+            $requestData['photo'] = $filename;
+        }
+        $data->fill($requestData)->save();
         return redirect()->route('hotels.index');
     }
 
@@ -149,7 +158,8 @@ class HotelController extends Controller
      */
     public function destroy($id)
     {
-        $data=Hotel::find($id);
+        $data = Hotel::find($id);
+        @unlink(public_path('hotel/images/' . $data->photo));
         $data->delete();
 
         return redirect()->back();
@@ -157,78 +167,71 @@ class HotelController extends Controller
 
     public function rooms()
     {
-        $data=Hotelroom::all();
-        return view('hotels.rooms',compact('data'));
+        $data = Hotelroom::all();
+        return view('hotels.rooms', compact('data'));
     }
 
     public function roomCreate()
-    {   
-        $data=Hotel::all();
-        return view('hotels.rooms_create',compact('data'));
+    {
+        $hotel_name = Hotel::orderby('name', 'asc')->get();
+        return view('hotels.rooms_create', compact('hotel_name'));
     }
 
     public function roomStore(Request $request)
     {
-        $data=array();
-        $data['hotel_id']=$request->hotel_id;
-        $data['title']=$request->title;
-        $data['subtitle']=$request->subtitle;
-        $data['description']=$request->description;
-        $data['offer_start_date']=$request->offer_start_date;
-        $data['offer_end_date']=$request->offer_end_date;
-        $data['beds']=$request->beds;
-        $data['baths']=$request->baths;
-        $data['price']=$request->price;
-        $data['discount']=$request->discount;
-        $data['discount_price']=$request->discount_price;
-        $data['max_occupancy']=$request->max_occupancy;
-        $data['private_policy']=$request->private_policy;
-        $data['info']=$request->info;
-        $data['image']=$request->image;
+        $data = $request->all();
+        // return $data;
+        if ($request->hasFile('image')) {
 
-        DB::table('hotelrooms')->insert($data);   
+            $file = $request->file('image');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('hotel/rooms/'), $filename);
+
+            $data['image'] = $filename;
+        }
+
+        HotelRoom::create($data);
         return redirect()->route('hotels.rooms');
     }
 
     public function roomEdit($id)
     {
-        $data=Hotelroom::findOrFail($id);
-        $hdata=Hotel::all();
-        return view('hotels.rooms_edit',compact('data','hdata'));
+        $data = Hotelroom::findOrFail($id);
+        $hdata = Hotel::all();
+        return view('hotels.rooms_edit', compact('data', 'hdata'));
     }
 
-    public function roomUpdate(Request $request,$id)
+    public function roomUpdate(Request $request, $id)
     {
-        $data=array();
-        $data['hotel_id']=$request->hotel_id;
-        $data['title']=$request->title;
-        $data['subtitle']=$request->subtitle;
-        $data['description']=$request->description;
-        $data['offer_start_date']=$request->offer_start_date;
-        $data['offer_end_date']=$request->offer_end_date;
-        $data['beds']=$request->beds;
-        $data['baths']=$request->baths;
-        $data['price']=$request->price;
-        $data['discount']=$request->discount;
-        $data['discount_price']=$request->discount_price;
-        $data['max_occupancy']=$request->max_occupancy;
-        $data['private_policy']=$request->private_policy;
-        $data['info']=$request->info;
-        //$data['image']=$request->image;
+        $data = $request->all();
+        $room = HotelRoom::findOrFail($id);
+        if ($request->hasFile('image')) {
 
-        DB::table('hotelrooms')->update($data);   
+            $file = $request->file('image');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('hotel/rooms/'), $filename);
+            // deleting previous photo
+            @unlink(public_path('hotel/rooms/' . $room->image));
+            $data['image'] = $filename;
+        }
+        $room->fill($data)->save();
         return redirect()->route('hotels.rooms');
     }
 
     public function roomDestroy($id)
     {
-        $data=Hotelroom::findOrFail($id);
+        $data = Hotelroom::findOrFail($id);
+        @unlink(public_path('hotel/rooms/' . $data->image));
         $data->delete();
+        return back();
     }
 
     public function ratings()
-    {
-        return view('hotels.ratings');
+    {   
+        $data=Hotelrating::all();
+        return view('hotels.ratings',compact('data'));
     }
 
 }

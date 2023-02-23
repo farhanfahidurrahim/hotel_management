@@ -9,7 +9,7 @@ use App\Models\Division;
 class Hotel extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','division_id','location','description','price','offer_price','discount','latitude','longitude','contact_no','facebook_page','website_link','youtube_link','photo','tags','services',];
+    protected $fillable = ['name','division_id','location','description','price','offer_price','discount','latitude','longitude','contact_no','facebook_page','website_link','youtube_link','photo','tags','services','status','popular_deal',];
 
     public function division()
     {

@@ -9,11 +9,11 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Restuarant List</h3>
+<h3>Restaurant List</h3>
 @endsection
 
 @section('breadcrumb-items')
-<a href="{{ route('restaurant.create') }}" class="btn btn-primary btn-sm">Add New Restuarant</a>
+<a href="{{ route('restaurant.create') }}" class="btn btn-primary btn-sm">Add New Restaurant</a>
 @endsection
 
 @section('content')

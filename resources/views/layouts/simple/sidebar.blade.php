@@ -46,7 +46,7 @@
 								</a>
 							</li>
 							<li>
-								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="{{route('hotels.index')}}">Hotels List
+								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="{{route('hotels.index')}}">All Hotels List
 								</a>
 							</li>
 							<li>

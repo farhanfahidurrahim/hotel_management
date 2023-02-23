@@ -19,6 +19,7 @@
 			<div class="card">
 				<div class="card-header">
 					<h5>Enter Hotel Info</h5>
+					<a href="{{ route('hotels.index') }}" class="" style="float: right;">All Hotel List</a>
 				</div>
 				<form class="form theme-form" action="{{ route('hotels.update',$data->id) }}" method="post" 
 				enctype="multipart/form-data">
@@ -122,12 +123,13 @@
 								</div>
 							</div>
 
-					        {{-- <div class="mb-3 row">
+					        <div class="mb-3 row">
 								<label class="col-sm-3 col-form-label">Upload Photo</label>
 								<div class="col-sm-9">
 									<input class="form-control" name="photo" type="file" accept="image/*">
+									<img src="{{ asset('file/hotel/images/'.$data->photo) }}" alt="" width="150" height="100" srcset="">
 								</div>
-							</div> --}}
+							</div>
 
 					         <div class="mb-3 row">
 								<label class="col-sm-3 col-form-label">Tags</label>
@@ -143,16 +145,27 @@
 								</div>
 							</div>
 
-							{{-- <div class="mb-3 row">
+							<div class="mb-3 row">
 								<label class="col-sm-3 col-form-label">Select Status</label>
 								<div class="col-sm-9">
 									<select name="status" class="custom-select form-select">
 										<option selected="" disabled>Open this select menu</option>
-										<option value="1">Active</option>
-										<option value="0">In Active</option>
+										<option value="1"{{ $data->status==1 ? 'selected' : '' }}>Active</option>
+										<option value="0"{{ $data->status==0 ? 'selected' : '' }}>In Active</option>
 									</select>
 								</div>
-							</div> --}}
+							</div>
+
+							<div class="mb-3 row">
+								<label class="col-sm-3 col-form-label">Popular Deal</label>
+								<div class="col-sm-9">
+									<select name="popular_deal" class="custom-select form-select">
+										<option selected="" disabled>Open this select menu</option>
+										<option value="1"{{ $data->popular_deal==1 ? 'selected' : '' }}>Popular</option>
+										<option value="0"{{ $data->popular_deal==0 ? 'selected' : '' }}>Not Popular</option>
+									</select>
+								</div>
+							</div>
 
 							</div>
 						</div>

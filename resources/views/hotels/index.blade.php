@@ -13,8 +13,7 @@
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Hotels</li>
-<li class="breadcrumb-item active">Hotel List</li>
+<a href="{{ route('hotels.create') }}" class="btn btn-primary btn-sm">Add New Hotel</a>
 @endsection
 
 @section('content')
@@ -36,6 +35,7 @@
 									<th>Offer Price</th>
 									<th>Discount</th>
 									<th>Status</th>
+									<th>Popular Deal</th>
 									<th>Action</th>
 								</tr>
 							</thead>
@@ -53,6 +53,13 @@
 										@endif
 										@if($row->status==0)
 											<i class="btn btn-danger">In-Active</i>
+										@endif
+									</td>
+									<td> @if($row->popular_deal==1)
+											<i class="btn btn-success">Popular</i>
+										@endif
+										@if($row->popular_deal==0)
+											<i class="btn btn-danger">Not-Popular</i>
 										@endif
 									</td>
 									<td>

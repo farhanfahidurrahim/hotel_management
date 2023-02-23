@@ -19,6 +19,7 @@
 			<div class="card">
 				<div class="card-header">
 					<h5>Enter Hotel Info</h5>
+					<a href="{{ route('hotels.index') }}" class="" style="float: right;">All Hotel List</a>
 				</div>
 				<form class="form theme-form" action="{{ route('hotels.store') }}" method="post" 
 				enctype="multipart/form-data">
@@ -186,6 +187,17 @@
 											<option selected="" disabled>Open this select menu</option>
 											<option value="1">Active</option>
 											<option value="0">In Active</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Popular Deal</label>
+									<div class="col-sm-9">
+										<select name="popular_deal" class="custom-select form-select">
+											<option selected="" disabled>Open this select menu</option>
+											<option value="1">Popular</option>
+											<option value="0">Not Popular</option>
 										</select>
 									</div>
 								</div>

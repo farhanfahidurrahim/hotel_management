@@ -14,7 +14,7 @@ class AddStatusToHotelsTable extends Migration
     public function up()
     {
         Schema::table('hotels', function (Blueprint $table) {
-            $table->string('status')->default(1)->after('services');
+            $table->string('status')->after('services');
         });
     }
 

@@ -38,10 +38,10 @@
                					<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Select Division</label>
 									<div class="col-sm-9">
-										<select class="custom-select form-select" id="division" name="division_id" required>
+										<select class="custom-select form-select" name="division_id" required>
 										    <option value="" selected disabled>Choose Division</option>
 												@foreach($division as $row)
-												<option value="{{ $row->id }}" @if($row->id==$data->id) selected @endif>{{ $row->name }}</option>
+												<option value="{{ $row->id }}" @if($row->id==$data->division_id) selected @endif>{{ $row->name }}</option>
 												@endforeach
 										</select>
 									</div>
