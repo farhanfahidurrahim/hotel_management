@@ -10,6 +10,14 @@ class BookingController extends Controller
 {
     public function index()
     {
-        
+        $data=Booking::orderBy('customer_name','asc')->get();
+        if ($data) {
+            return response()->json([
+                'ALL Booking'=>$data,
+                200
+            ]);
+        }else{
+            return response()->json(['error'=>'Not Found Booking Data']);
+        }
     }
 }
