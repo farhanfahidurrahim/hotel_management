@@ -31,7 +31,7 @@
 									<div class="col-sm-9">
 										<select class="custom-select form-select" id="division" name="hotel_id">
 										    <option value="">Select Hotel</option> 
-												@foreach($data as $row)
+												@foreach($hotel_name as $row)
 												<option value="{{ $row->id }}">{{ $row->name }}</option>
 												@endforeach
 										</select>

@@ -9,12 +9,11 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Hotel List</h3>
+<h3>Hotel Booked</h3>
 @endsection
 
 @section('breadcrumb-items')
-<li class="breadcrumb-item">Hotels</li>
-<li class="breadcrumb-item active">Hotel List</li>
+<a href="{{ route('booking.create') }}" class="btn btn-danger">Hotel Booking Create</a>
 @endsection
 
 @section('content')
@@ -41,24 +40,38 @@
 									<th>Discount</th>
 									<th>Final Price</th>
 									<th>Status</th>
+									<th>Action</th>
 								</tr>
 							</thead>
 							<tbody>
+								@foreach($data as $row)
 								<tr>
-									<td>Tiger Nixon</td>
-									<td>System Architect</td>
-									<td>Edinburgh</td>
-									<td>61</td>
-									<td>2011/04/25</td>
-									<td>$320,800</td>
-									<td>$320,800</td>
-									<td>$320,800</td>
-									<td>$320,800</td>
-									<td>$320,800</td>
-									<td>$320,800</td>
-									<td>$320,800</td>
+									<td>{{ $row->customer_name }}</td>
+									<td>{{ $row->customer_phone }}</td>
+									<td>{{ $row->hotel->name }}</td>
+									<td>{{ $row->hotelroom->title }}</td>
+									<td>{{ $row->check_in }}</td>
+									<td>{{ $row->check_out }}</td>
+									<td>{{ $row->distance }}</td>
+									<td>{{ $row->numberof_room }}</td>
+									<td>{{ $row->original_price }}</td>
+									<td>{{ $row->discount }}</td>
+									<td>{{ $row->final_price }}</td>
+									<td>
+										@if( $row->status==0 )<i class="btn btn-warning">Pending</i>@endif
+										@if( $row->status==1 )<i class="btn btn-success">Booked</i>@endif
+										@if( $row->status==2 )<i class="btn btn-danger">Rejected</i>@endif
+									</td>
+									<td class="d-flex">
+										<a class="btn btn-primary active" href="{{route('booking.edit',$row->id)}}">Edit</a>
+										<form class="px-3" onclick="return confirm('Are you sure you want to delete this contact?')" 	 method="POST" action="{{route('booking.delete',$row->id)}}">
+											@csrf
+											@method('DELETE')
+											<button class="btn btn-secondary active">Delete</button>
+										</form>
+									</td>
 								</tr>
-
+								@endforeach
 						</table>
 					</div>
 				</div>

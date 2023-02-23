@@ -8,7 +8,7 @@
 @endsection
 
 @section('breadcrumb-title')
-<h3>Create Booking</h3>
+<h3>Edit Booking</h3>
 @endsection
 
 
@@ -18,14 +18,26 @@
 		<div class="col-sm-12">
 			<div class="card">
 				<div class="card-header">
-					<h5>Book A Hotel Room</h5>
+					<h5>Edit Booking</h5>
 					<a href="{{ route('booking.index') }}" class="" style="float: right;">All Booking List</a>
 				</div>
-				<form class="form theme-form" method="POST" action="{{ route('booking.store') }}">
+				<form class="form theme-form" method="POST" action="{{ route('booking.update',$data->id) }}">
 					@csrf
 					<div class="card-body">
 						<div class="row">
 							<div class="col">
+
+								<div class="mb-3 row">
+									<label class="col-sm-3 col-form-label">Select Status</label>
+									<div class="col-sm-9">
+										<select name="status" class="custom-select form-select">
+											<option disabled>Open this select menu</option>
+											<option value="0"{{ $data->status==0 ? 'selected' : '' }}>Pending</option>
+											<option value="1"{{ $data->status==1 ? 'selected' : '' }}>Booked</option>
+											<option value="2"{{ $data->status==2 ? 'selected' : '' }}>Rejected</option>
+										</select>
+									</div>
+								</div>
 
                 				{{-- <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Select User</label>
@@ -42,14 +54,14 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Customer Name</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="text" name="customer_name" placeholder="Customer Name">
+										<input class="form-control" type="text" name="customer_name" value="{{ $data->customer_name}}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Customer Phone</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="number" name="customer_phone" placeholder="Customer Phone">
+										<input class="form-control" type="number" name="customer_phone" value="{{ $data->customer_phone}}">
 									</div>
 								</div>
 
@@ -57,14 +69,14 @@
 									<label class="col-sm-3 col-form-label">Select Hotel & Room</label>
 									<div class="col-sm-9">
 										<select class="custom-select form-select" name="room_id">
-											<option selected="" disabled>Open this select hotel</option>
+											<option disabled>Open this select hotel</option>
 											@foreach($hotel as $row)
 												@php
 													$hotelroom=DB::table('hotelrooms')->where('hotel_id',$row->id)->get();
 												@endphp
 												<option disabled style="color: red">{{ $row->name }}</option>
 												@foreach($hotelroom as $row)
-													<option value="{{$row->id}}">---{{ $row->title }}</option>
+													<option value="{{$row->id}}" @if($row->id==$data->room_id) selected @endif>--{{ $row->title }}</option>
 												@endforeach
 											@endforeach
 										</select>
@@ -74,60 +86,48 @@
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Number of Rooms</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="Number" name="numberof_room" placeholder="Number of Rooms">
+										<input class="form-control" type="Number" name="numberof_room" value="{{ $data->numberof_room}}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Check In</label>
 									<div class="col-sm-9">
-										<input class="form-control digits" name="check_in" id="example-datetime-local-input" type="date">
+										<input class="form-control digits" name="check_in" id="example-datetime-local-input" type="date" value="{{ $data->check_in }}">
 									</div>
 								</div>
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Check Out</label>
 									<div class="col-sm-9">
-										<input class="form-control digits" name="check_out" id="example-datetime-local-input" type="date">
+										<input class="form-control digits" name="check_out" id="example-datetime-local-input" type="date" value="{{ $data->check_out }}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Distance</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="text" name="distance" placeholder="Distance">
+										<input class="form-control" type="text" name="distance" value="{{ $data->distance }}">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Original Price</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="Number" name="original_price" placeholder="Original Price" step="0.01">
+										<input class="form-control" type="Number" name="original_price" value="{{ $data->original_price }}" step="0.01">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Discount</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="Number" name="discount" placeholder="Discount Price" step="0.01">
+										<input class="form-control" type="Number" name="discount" value="{{ $data->discount }}" step="0.01">
 									</div>
 								</div>
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Final Price</label>
 									<div class="col-sm-9">
-										<input class="form-control" type="Number" name="final_price" placeholder="Final Price" step="0.01">
-									</div>
-								</div>
-
-								<div class="mb-3 row">
-									<label class="col-sm-3 col-form-label">Select Status</label>
-									<div class="col-sm-9">
-										<select name="status" class="custom-select form-select">
-											<option selected="" disabled>Open this select menu</option>
-											<option value="0">Pending</option>
-											<option value="1">Booked</option>
-											<option value="2">Rejected</option>
-										</select>
+										<input class="form-control" type="Number" name="final_price" value="{{ $data->final_price }}" step="0.01">
 									</div>
 								</div>
 

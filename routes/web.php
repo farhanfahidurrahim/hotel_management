@@ -100,9 +100,13 @@ Route::prefix('hotels')->group(function () {
     Route::get('/rating', [HotelController::class,'ratings'])->name('hotels.rating');
 });
 
-Route::prefix('bookings')->group(function () {
+Route::prefix('hotel-bookings')->group(function () {
     Route::get('/', [BookingController::class,'index'])->name('booking.index');
     Route::get('/create', [BookingController::class,'create'])->name('booking.create');
+    Route::post('/store', [BookingController::class,'store'])->name('booking.store');
+    Route::get('/edit/{id}', [BookingController::class,'edit'])->name('booking.edit');
+    Route::post('/update/{id}', [BookingController::class,'update'])->name('booking.update');
+    Route::post('/delete/{id}', [BookingController::class,'destroy'])->name('booking.delete');
 });
 
 Route::prefix('restaurant')->group(function () {

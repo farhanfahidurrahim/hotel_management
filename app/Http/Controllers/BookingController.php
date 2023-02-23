@@ -3,17 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Booking;
+use App\Models\Hotel;
+use App\Models\Hotelroom;
+use DB;
 
 class BookingController extends Controller
-{
+{   
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('booking.index');
+    {   
+        $data=Booking::all();
+        return view('booking.index',compact('data'));
     }
 
     /**
@@ -22,8 +32,9 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('booking.create');
+    {   
+        $hotel=Hotel::all();
+        return view('booking.create',compact('hotel'));
     }
 
     /**
@@ -34,7 +45,25 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request->all());
+        $hotelid=DB::table('hotelrooms')->where('id',$request->room_id)->first();
+        //dd($hotelid);
+        Booking::insert([
+            'customer_name'=>$request->customer_name,
+            'customer_phone'=>$request->customer_phone,
+            'hotel_id'=>$hotelid->hotel_id,
+            'room_id'=>$request->room_id,
+            'check_in'=>$request->check_in,
+            'check_out'=>$request->check_out,
+            'distance'=>$request->distance,
+            'numberof_room'=>$request->numberof_room,
+            'original_price'=>$request->original_price,
+            'discount'=>$request->discount,
+            'final_price'=>$request->final_price,
+            'status'=>$request->status,
+        ]);
+
+        return redirect()->route('booking.index');
     }
 
     /**
@@ -45,7 +74,7 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+        
     }
 
     /**
@@ -55,8 +84,10 @@ class BookingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
+    {   
+        $data=Booking::FindorFail($id);
+        $hotel=Hotel::all();
+        return view('booking.edit',compact('data','hotel'));
     }
 
     /**
@@ -68,7 +99,26 @@ class BookingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd($request->all());
+        $hotelid=DB::table('hotelrooms')->where('id',$request->room_id)->first();
+        //dd($hotelid);
+        $data = Booking::FindorFail($id);
+        $data->update([
+            'customer_name'=>$request->customer_name,
+            'customer_phone'=>$request->customer_phone,
+            'hotel_id'=>$hotelid->hotel_id,
+            'room_id'=>$request->room_id,
+            'check_in'=>$request->check_in,
+            'check_out'=>$request->check_out,
+            'distance'=>$request->distance,
+            'numberof_room'=>$request->numberof_room,
+            'original_price'=>$request->original_price,
+            'discount'=>$request->discount,
+            'final_price'=>$request->final_price,
+            'status'=>$request->status,
+        ]);
+
+        return redirect()->route('booking.index');
     }
 
     /**
@@ -79,6 +129,9 @@ class BookingController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data=Booking::FindorFail($id);
+        $data->delete();
+
+        return redirect()->back();
     }
 }

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\DivisionController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\RestaurantController;
 use App\Http\Controllers\Api\AboutUsController;
 use App\Http\Controllers\Api\PrivacyPolicyController;
@@ -40,6 +41,9 @@ Route::post('/delete_divison/{id}',[DivisionController::class,'destroy']);
 Route::get('/all_hotel',[HotelController::class,'hotel_list']);
 Route::get('/hotel_Room_list',[HotelController::class,'hotel_Room_list']);
 
+//Booking API Routes
+Route::get('/all-booking',[BookingController::class,'index']);
+
 //Restaurant API Routes
 Route::get('/all-restaurant',[RestaurantController::class,'index']);
 Route::get('/all-restaurant-menus',[RestaurantController::class,'menuIndex']);
@@ -49,6 +53,5 @@ Route::get('/about-us',[AboutUsController::class,'index']);
 Route::get('/privacy-policy',[PrivacyPolicyController::class,'index']);
 Route::get('/help-support',[HelpSupportController::class,'index']);
 Route::get('/terms-service',[TermsServiceController::class,'index']);
-
 
 

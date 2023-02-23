@@ -44,13 +44,17 @@
 									<td>{{ $row->hotel->name }}</td>
 									<td>{{ $row->title }}</td>
 									<td>{{ $row->price }}</td>
-									<td>{{ $row->discount }}</td>
+									<td>{{ $row->discount }}%</td>
 									<td>{{ $row->discount_price }}</td>
 									<td>{{ $row->offer_start_date }}</td>
 									<td>{{ $row->offer_end_date }}</td>
-									<td>
-										<a href="{{ route('hotels.rooms.edit',$row->id) }}" class="btn btn-primary btn-sm">Edit</a>
-										<a href="{{ route('hotels.rooms.delete',$row->id) }}" class="btn btn-danger btn-sm">Delete</a>
+									<td class="d-flex">
+										<a class="btn btn-primary active" href="{{route('hotels.rooms.edit',$row->id)}}">Edit</a>
+										<form class="px-3" onclick="return confirm('Are you sure you want to delete this contact?')" 	 method="POST" action="{{route('hotels.rooms.delete',$row->id)}}">
+											@csrf
+											@method('DELETE')
+											<button class="btn btn-secondary active">Delete</button>
+										</form>
 									</td>
 								</tr>
 								@endforeach
