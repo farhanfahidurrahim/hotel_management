@@ -143,10 +143,10 @@ class RestaurantController extends Controller
      */
     public function destroy($id)
     {
-        $data=Restaurant::findOrFail($id);
+        $data = Restaurant::findOrFail($id);
+        @unlink(public_path('file/restaurant/images/' . $data->photo));
         $data->delete();
-
-        return redirect()->back();
+        return back();
     }
 
 
@@ -216,10 +216,10 @@ class RestaurantController extends Controller
 
     public function menusdestroy($id)
     {
-        $data=Restaurantmenu::findOrFail($id);
+        $data = Restaurantmenu::findOrFail($id);
+        @unlink(public_path('file/restaurantmenu/images/' . $data->photo));
         $data->delete();
-
-        return redirect()->back();
+        return back();
     }
 
     public function foods()

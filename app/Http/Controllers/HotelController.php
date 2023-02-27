@@ -233,6 +233,25 @@ class HotelController extends Controller
         return back();
     }
 
+    //Ajax Get Hotel Price for Booking
+    public function GetHotelOriginalPrice($id)
+    {
+        $data=DB::table('hotelrooms')->where('id',$id)->get();
+        return response()->json($data);
+    }
+
+    public function GetHotelDiscountPrice($id)
+    {
+        $data=DB::table('hotelrooms')->where('id',$id)->get();
+        return response()->json($data);
+    }
+
+    public function GetHotelFinalPrice($id)
+    {
+        $data=DB::table('hotelrooms')->where('id',$id)->get();
+        return response()->json($data);
+    }
+
     public function ratings()
     {   
         $data=Hotelrating::all();

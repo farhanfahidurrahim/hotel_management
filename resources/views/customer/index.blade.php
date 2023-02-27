@@ -31,7 +31,9 @@
 								<tr>
 									<th>Name</th>
 									<th>Email</th>
-									<th>Mobile Number</th>
+									<th>Phone</th>
+									<th>Gender</th>
+									<th>Address</th>
 									<th>Status</th>
 									<th>Actions</th>
 								</tr>
@@ -42,7 +44,15 @@
 									<td>{{$customer->name}}</td>
 									<td>{{$customer->email}}</td>
 									<td>{{$customer->phone}}</td>
-									<td>{{$customer->status ? 'Active' : 'In active' }}</td>
+									<td>
+										@if($customer->gender==1)<span>Male</span>@endif
+										@if($customer->gender==2)<span>Female</span>@endif
+									</td>
+									<td>{{$customer->address}}</td>
+									<td>
+										@if($customer->status==1)<i class="btn btn-success">Active</i>@endif
+										@if($customer->status==0)<i class="btn btn-danger">In-Active</i>@endif
+									</td>
 									<td class="d-flex">
 										<a class="btn btn-primary active" href="{{route('customer.edit',$customer->id)}}">Edit</a>
 										<form class="px-3" onclick="return confirm('Are you sure you want to delete this contact?')" method="POST" action="{{route('customer.destroy',$customer->id)}}">
@@ -53,7 +63,7 @@
 									</td>
 								</tr>
 								@endforeach
-              </tbody>
+              				</tbody>
 						</table>
 					</div>
 				</div>

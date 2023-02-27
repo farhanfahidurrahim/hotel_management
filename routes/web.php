@@ -106,8 +106,14 @@ Route::prefix('hotel-bookings')->group(function () {
     Route::post('/store', [BookingController::class,'store'])->name('booking.store');
     Route::get('/edit/{id}', [BookingController::class,'edit'])->name('booking.edit');
     Route::post('/update/{id}', [BookingController::class,'update'])->name('booking.update');
-    Route::post('/delete/{id}', [BookingController::class,'destroy'])->name('booking.delete');
+    Route::delete('/delete/{id}', [BookingController::class,'destroy'])->name('booking.delete');
 });
+
+//ajax route
+Route::get('/get-customer-name/{id}', [CustomerController::class,'GetCustomerName']);
+Route::get('/get-hotel-original-price/{id}', [HotelController::class,'GetHotelOriginalPrice']);
+Route::get('/get-hotel-discount-price/{id}', [HotelController::class,'GetHotelDiscountPrice']);
+Route::get('/get-hotel-final-price/{id}', [HotelController::class,'GetHotelFinalPrice']);
 
 Route::prefix('restaurant')->group(function () {
     Route::get('/', [RestaurantController::class,'index'])->name('restaurant.index');
@@ -203,4 +209,3 @@ Route::get('lang/{locale}', function ($locale) {
     Session::get('locale');
     return redirect()->back();
 })->name('lang');
-

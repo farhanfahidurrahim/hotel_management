@@ -6,24 +6,29 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Hotel;
 use App\Models\Hotelroom;
+use App\Models\User;
 
 class Booking extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'customer_name',
+        'user_id',
         'customer_phone',
         'hotel_id',
         'room_id',
         'check_in',
         'check_out',
         'distance',
-        'numberof_room',
         'original_price',
         'discount',
         'final_price',
         'status',
     ];
+
+    public function username()
+    {
+        return $this->belongsTo(User::class,'user_id');
+    }
 
     public function hotel()
     {

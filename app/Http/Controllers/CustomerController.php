@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use DB;
+use App\Models\User;
+use Hash;
 
 class CustomerController extends Controller
 {
@@ -14,7 +17,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::get();
+        $customers = User::where('role','customer')->get();
         return view("customer.index",compact('customers'));
     }
 
@@ -36,18 +39,32 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        $data=$request->all();
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'required|string|min:0',
-            'status' => 'required|boolean',
+        //Working with Image
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = date('Ymdhms').'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('file/customer/images/'),$filename);
+
+            $data['image'] = $filename;
+        }
+
+        User::create([
+            'name' => $data['name'],
+            'role' => 'customer',
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'phone' => $data['phone'],
+            'gender' => $data['gender'],
+            'dob' => $data['dob'],
+            'image' => $data['image'],
+            'address' => $data['address'],
+            'prefer' => $data['prefer'],
+            'status' => $data['status'],
         ]);
 
-        Customer::create($validatedData);
-
         return redirect()->route('customer.index');
-
     }
 
     /**
@@ -69,7 +86,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        $customer = Customer::findOrFail($id);
+        $customer = User::findOrFail($id);
         return view('customer.edit', compact('customer'));
     }
 
@@ -81,18 +98,35 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
+    {   
+        //dd($request->all());
+        $requestData = $request->all();
+        $requestData['password']=Hash::make($request->password);
+        $data =   User::FindorFail($id);
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'nullable|email|max:255',
-            'phone' => 'required|string|min:0',
-            'status' => 'required|boolean',
-        ]);
+        if ($request->hasFile('image')) {
 
-        $customer = Customer::findOrFail($id);
+            $file = $request->file('image');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('file/customer/images/'), $filename);
+            // deleting previous photo 
+            @unlink(public_path('file/customer/images/'. $data->image));
+            $requestData['image']= $filename;
+        }
 
-        $customer->update($validatedData);
+        $data->fill($requestData)->save();
+
+        // $validatedData = $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'nullable|email|max:255',
+        //     'phone' => 'required|string|min:0',
+        //     'status' => 'required|boolean',
+        // ]);
+
+        // $customer = Customer::findOrFail($id);
+
+        // $customer->update($validatedData);
 
         return redirect()->route('customer.index');
 
@@ -106,8 +140,16 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        $customer = Customer::findOrFail($id);
-        $customer->delete();
-        return redirect()->back();
+        $data = User::findOrFail($id);
+        @unlink(public_path('file/customer/images/' . $data->image));
+        $data->delete();
+        return back();
+    }
+
+    //Ajax Get Customer Name for Booking
+    public function GetCustomerName($id)
+    {
+        $data=DB::table('users')->where('phone',$id)->get();
+        return response()->json($data);
     }
 }

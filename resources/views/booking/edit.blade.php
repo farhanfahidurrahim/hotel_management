@@ -51,7 +51,7 @@
 									</div>
 								</div> --}}
 
-								<div class="mb-3 row">
+								{{-- <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Customer Name</label>
 									<div class="col-sm-9">
 										<input class="form-control" type="text" name="customer_name" value="{{ $data->customer_name}}">
@@ -63,7 +63,7 @@
 									<div class="col-sm-9">
 										<input class="form-control" type="number" name="customer_phone" value="{{ $data->customer_phone}}">
 									</div>
-								</div>
+								</div> --}}
 
 								<div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Select Hotel & Room</label>
@@ -80,13 +80,6 @@
 												@endforeach
 											@endforeach
 										</select>
-									</div>
-								</div>
-                				
-								<div class="mb-3 row">
-									<label class="col-sm-3 col-form-label">Number of Rooms</label>
-									<div class="col-sm-9">
-										<input class="form-control" type="Number" name="numberof_room" value="{{ $data->numberof_room}}">
 									</div>
 								</div>
 
@@ -110,7 +103,7 @@
 									</div>
 								</div>
 
-								<div class="mb-3 row">
+								{{-- <div class="mb-3 row">
 									<label class="col-sm-3 col-form-label">Original Price</label>
 									<div class="col-sm-9">
 										<input class="form-control" type="Number" name="original_price" value="{{ $data->original_price }}" step="0.01">
@@ -130,7 +123,7 @@
 										<input class="form-control" type="Number" name="final_price" value="{{ $data->final_price }}" step="0.01">
 									</div>
 								</div>
-
+ --}}
 							</div>
 						</div>
 					</div>

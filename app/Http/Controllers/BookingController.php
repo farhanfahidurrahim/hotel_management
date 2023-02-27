@@ -7,6 +7,7 @@ use App\Models\Booking;
 use App\Models\Hotel;
 use App\Models\Hotelroom;
 use DB;
+use App\Models\User;
 
 class BookingController extends Controller
 {   
@@ -22,7 +23,7 @@ class BookingController extends Controller
      */
     public function index()
     {   
-        $data=Booking::all();
+        $data=Booking::orderBy('check_in', 'desc')->get();;
         return view('booking.index',compact('data'));
     }
 
@@ -31,8 +32,25 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {   
+        if ($request->ajax()) {
+            $data=User::where('phone','LIKE',$request->customer_phone.'%')->get();
+            $output='';
+            if (count($data) > 0) {
+                $output='<ul class="list-group" style="display:block;position:relative;z-index:1">';
+                    foreach($data as $row){
+                        $output .='<li class="list-group-item">'.$row->phone.'</li>';
+                    }
+                $output .= '</ul>';
+            }
+            else{
+                $output .='<li class="list-group-item">No Customer Data Found</li>';
+            }
+
+            return $output;
+        }
+
         $hotel=Hotel::all();
         return view('booking.create',compact('hotel'));
     }
@@ -49,21 +67,37 @@ class BookingController extends Controller
         $hotelid=DB::table('hotelrooms')->where('id',$request->room_id)->first();
         //dd($hotelid);
         Booking::insert([
-            'customer_name'=>$request->customer_name,
+            'user_id'=>$request->user_id,
             'customer_phone'=>$request->customer_phone,
             'hotel_id'=>$hotelid->hotel_id,
             'room_id'=>$request->room_id,
             'check_in'=>$request->check_in,
             'check_out'=>$request->check_out,
             'distance'=>$request->distance,
-            'numberof_room'=>$request->numberof_room,
             'original_price'=>$request->original_price,
             'discount'=>$request->discount,
             'final_price'=>$request->final_price,
             'status'=>$request->status,
         ]);
 
-        return redirect()->route('booking.index');
+        // $input=$request->all();
+
+        // $basic  = new \Vonage\Client\Credentials\Basic("46f12234", "srjs0NuIPynSlZZ2");
+        // $client = new \Vonage\Client($basic);
+
+        // $response = $client->sms()->send(
+        //     new \Vonage\SMS\Message\SMS('88'.$input['customer_phone'], 'Hotel-Management', 'Hotel Booking Confirmation!')
+        // );
+
+        // $message = $response->current();
+
+        // if ($message->getStatus() == 0) {
+        //     return redirect()->route('booking.index')->with('success','The Message Sent Successfully!');
+        // } else {
+        //     return redirect()->route('booking.index')->with('error',"The message failed with status: " . $message->getStatus() . "\n");
+        // }
+
+        return redirect()->route('booking.index')->with('success','The Message Sent Successfully!');
     }
 
     /**
@@ -104,14 +138,11 @@ class BookingController extends Controller
         //dd($hotelid);
         $data = Booking::FindorFail($id);
         $data->update([
-            'customer_name'=>$request->customer_name,
-            'customer_phone'=>$request->customer_phone,
             'hotel_id'=>$hotelid->hotel_id,
             'room_id'=>$request->room_id,
             'check_in'=>$request->check_in,
             'check_out'=>$request->check_out,
             'distance'=>$request->distance,
-            'numberof_room'=>$request->numberof_room,
             'original_price'=>$request->original_price,
             'discount'=>$request->discount,
             'final_price'=>$request->final_price,
