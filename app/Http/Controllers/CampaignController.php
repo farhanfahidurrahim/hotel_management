@@ -36,23 +36,25 @@ class CampaignController extends Controller
      */
     public function store(Request $request)
     {   
-        $request->validate([
-            'title'=>'required',
-            'type'=>'required',
-            'start_date'=>'required',
-            'end_date'=>'required',
-            'photo'=>'required',
-        ]);
+        $data=$request->all();
 
-        Campaign::insert([
+         if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $filename = date('Ymdhms').'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('file/campaign/images/'),$filename);
+
+            $data['photo'] = $filename;
+        }
+
+        Campaign::create([
             'title'=>$request->title,
             'type'=>$request->type,
             'start_date'=>$request->start_date,
             'end_date'=>$request->end_date,
-            'photo'=>$request->photo,
+            'photo' => $data['photo'],
         ]);
 
-        return redirect()->back();
+        return redirect()->route('campaign.index');
     }
 
     /**
@@ -74,7 +76,8 @@ class CampaignController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data = Campaign::findOrFail($id);
+        return view('campaign.edit', compact('data'));
     }
 
     /**
@@ -86,7 +89,22 @@ class CampaignController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $requestData = $request->all();
+        $data =   Campaign::FindorFail($id);
+
+        if ($request->hasFile('photo')) {
+
+            $file = $request->file('photo');
+            $filename = date('Ymdhms') . '.' . $file->getClientOriginalExtension();
+            //dd($filename);
+            $file->move(public_path('file/campaign/images/'), $filename);
+            // deleting previous photo 
+            @unlink(public_path('file/campaign/images/'. $data->photo));
+            $requestData['photo']= $filename;
+        }
+
+        $data->fill($requestData)->save();
+        return redirect()->route('campaign.index');
     }
 
     /**
@@ -97,6 +115,9 @@ class CampaignController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Campaign::findOrFail($id);
+        @unlink(public_path('file/campaign/images/' . $data->photo));
+        $data->delete();
+        return back();
     }
 }

@@ -44,7 +44,7 @@
 									<td>{{$row->type}}</td>
 									<td>{{$row->start_date}}</td>
 									<td>{{$row->end_date}}</td>
-									<td>{{$row->photo}}</td>
+									<td><img src="{{ url('file/campaign/images/'.$row->photo) }}" width="70px" height="70px" alt=""/></td>
 									<td class="d-flex">
 										<a class="btn btn-primary active" href="{{route('campaign.edit',$row->id)}}">Edit</a>
 										<form class="px-3" onclick="return confirm('Are you sure you want to delete this contact?')" method="POST" action="{{route('campaign.destroy',$row->id)}}">

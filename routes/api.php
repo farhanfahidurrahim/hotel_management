@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\AboutUsController;
 use App\Http\Controllers\Api\PrivacyPolicyController;
 use App\Http\Controllers\Api\HelpSupportController;
 use App\Http\Controllers\Api\TermsServiceController;
+use App\Http\Controllers\Api\ClaimedDiscountController;
+use App\Http\Controllers\Api\ReviewController;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,7 @@ Route::get('/all-booking',[BookingController::class,'index']);
 //Restaurant API Routes
 Route::get('/all-restaurant',[RestaurantController::class,'index']);
 Route::get('/all-restaurant-menus',[RestaurantController::class,'menuIndex']);
+Route::get('/view-restaurant/{id}',[RestaurantController::class,'viewRestaurant']);
 
 //AboutUs, PrivacyPolicy, HelpSupport : API Routes
 Route::get('/about-us',[AboutUsController::class,'index']);
@@ -54,4 +57,8 @@ Route::get('/privacy-policy',[PrivacyPolicyController::class,'index']);
 Route::get('/help-support',[HelpSupportController::class,'index']);
 Route::get('/terms-service',[TermsServiceController::class,'index']);
 
+//Claimd Discount API Routes
+Route::post('/claimed-discount/userid={userid}/username={username}/restid={restid}/restname={restname}',[ClaimedDiscountController::class,'store']);
 
+//Restaurant Review API Routes
+Route::post('/restaurant-review/userid={userid}/username={username}/restid={restid}/restname={restname}',[ReviewController::class,'store']);

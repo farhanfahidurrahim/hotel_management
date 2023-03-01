@@ -4,9 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use App\Models\Claimeddiscount;
 
 class RestaurantOrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -101,5 +106,26 @@ class RestaurantOrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function claimedDiscount()
+    {   
+        $data=Claimeddiscount::all();
+        return view('orders.claimed_discount',compact('data'));
+    } 
+
+    public function claimedDiscountEdit($id)
+    {   
+        $data=Claimeddiscount::FindorFail($id);
+        return view('orders.claimed_discount_edit',compact('data'));
+    }
+
+    public function claimedDiscountUpdate(Request $request,$id)
+    {
+        $requestData=$request->all();
+        $data=Claimeddiscount::FindorFail($id);
+        $data->fill($requestData)->save();
+
+        return redirect()->route('claimed.discount');
     }
 }

@@ -48,24 +48,6 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        // $validatedData = $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'division_id' => 'required|string',
-        //     // 'district' => 'required|string',
-        //     // 'upozilla' => 'required|string',
-        //     'location' => 'required|string',
-        //     'desctiption' => 'nullable|string',
-        //     'discount' => 'nullable|integer',
-        //     'latitude' => 'required|string',
-        //     'longitude' => 'required|string',
-        //     'contact_no' => 'required|string',
-        //     'facebook_page' => 'nullable|string',
-        //     'website_link' => 'nullable|string',
-        //     'youtube_link' => 'nullable|string',
-        //     'tags' => 'nullable|string',
-        //     'status' => 'required|boolean',
-        // ]);
-        //dd($request->all());
         $data=array();
         $data['name']=$request->name;
         $data['division_id']=$request->division_id;

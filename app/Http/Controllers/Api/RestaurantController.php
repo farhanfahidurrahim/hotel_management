@@ -18,8 +18,21 @@ class RestaurantController extends Controller
         if ($data) {
             return response()->json([
                 'ALL Restaurant'=>$data,
-                'Menu'=>$menudata,
-                'Rating'=>$ratingdata,
+                //'Menu'=>$menudata,
+                //'Rating'=>$ratingdata,
+                200
+            ]);
+        }else{
+            return response()->json(['error'=>'Not Found Restaurant Data']);
+        }
+    }
+
+    public function viewRestaurant($id)
+    {
+        $data=Restaurant::where('id',$id)->where('status','=',1)->with('restaurantreview')->first();
+        if ($data) {
+            return response()->json([
+                'View Restaurant'=>$data,
                 200
             ]);
         }else{

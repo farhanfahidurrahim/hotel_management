@@ -136,7 +136,10 @@
 								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="{{route('order.cancelled')}}">Cancelled Orders
 								</a>
 							</li>
-
+							<li>
+								<a class="submenu-title {{ in_array(Route::currentRouteName(), ['form-validation', 'base-input', 'radio-checkbox-control', 'input-group', 'megaoptions']) ? 'active' : '' }}" href="{{route('claimed.discount')}}">Claimed Discount
+								</a>
+							</li>
 
 						</ul>
 					</li>

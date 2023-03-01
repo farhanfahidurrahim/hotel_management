@@ -145,6 +145,9 @@ Route::prefix('orders')->group(function () {
     Route::get('/pending', [RestaurantOrderController::class,'pending'])->name('order.pending');
     Route::get('/delivered', [RestaurantOrderController::class,'delivered'])->name('order.delivered');
     Route::get('/cancelled', [RestaurantOrderController::class,'cancelled'])->name('order.cancelled');
+    Route::get('/claimed-discount', [RestaurantOrderController::class,'claimedDiscount'])->name('claimed.discount');
+    Route::get('/claimed-discount/edit/{id}', [RestaurantOrderController::class,'claimedDiscountEdit'])->name('claimed.discount.edit');
+    Route::post('/claimed-discount/update/{id}', [RestaurantOrderController::class,'claimedDiscountUpdate'])->name('claimed.discount.update');
 });
 
 Route::prefix('reward')->group(function () {
@@ -164,7 +167,8 @@ Route::prefix('campaign')->group(function () {
     Route::get('/create', [CampaignController::class,'create'])->name('campaign.create');
     Route::post('/store', [CampaignController::class,'store'])->name('campaign.store');
     Route::get('/edit/{id}', [CampaignController::class,'edit'])->name('campaign.edit');
-    Route::get('/delete/{id}', [CampaignController::class,'delete'])->name('campaign.destroy');
+    Route::post('/update/{id}', [CampaignController::class,'update'])->name('campaign.update');
+    Route::delete('/delete/{id}', [CampaignController::class,'destroy'])->name('campaign.destroy');
 });
 
 Route::resource('customer', CustomerController::class);
